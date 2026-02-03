@@ -5,9 +5,25 @@ export default function Header() {
   const { user, logout } = useAuth()
 
   return (
-    <header>
-      <div>{user ? `Ulogovan: ${user.username}` : "Nisi ulogovan"}</div>
-      {user && <button onClick={logout}>Logout</button>}
+    <header className="app-header">
+      {/* LEVO */}
+      <div className="header-left">
+        {user && <span className="header-user">{user.username}</span>}
+      </div>
+
+      {/* CENTAR */}
+      <div className="header-center">
+        <h2>CS2 Wheel</h2>
+      </div>
+
+      {/* DESNO */}
+      <div className="header-right">
+        {user && (
+          <button className="logout-btn" onClick={logout}>
+            Logout
+          </button>
+        )}
+      </div>
     </header>
   )
 }
