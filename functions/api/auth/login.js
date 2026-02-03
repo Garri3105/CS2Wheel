@@ -1,3 +1,5 @@
+import { signJwt } from "./_jwt"
+
 function json(data, status = 200) {
   return new Response(JSON.stringify(data), {
     status,
@@ -55,5 +57,11 @@ export async function onRequestPost({ request, env }) {
     return json({ ok: false, error: "Invalid credentials" }, 401)
   }
 
-  return json({ ok: true, user: { id: row.id, username: row.username } })
+  return new Response(JSON.stringify({ ok: true, user: { id: row.id, username: row.username } }), {
+    status: 200,
+    headers: {
+      "Content-Type": "application/json",
+      "Set-Cookie": `session=${token}; HttpOnly; Secure; Path=/; SameSite=Lax; Max-Age=604800`,
+    },
+  })
 }
