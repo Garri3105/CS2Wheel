@@ -1,7 +1,8 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../../auth/AuthContext"
-import * as auth from "../../auth/fakeAuthService"
+import * as auth from "../../auth/apiAuthService"
+
 import "./AuthPage.css"
 
 export default function AuthPage() {
@@ -12,18 +13,19 @@ export default function AuthPage() {
   const { login: setAuthUser } = useAuth()
   const navigate = useNavigate()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setError("")
 
     try {
-        const user = isLogin
-            ? auth.login(username, password)
-            : auth.register(username, password)
-        setAuthUser(user)
-        navigate("/")
+      const user = isLogin
+        ? await auth.login(username, password)
+        : await auth.register(username, password)
+
+      setAuthUser(user)
+      navigate("/")
     } catch (err) {
-        setError(err.message)
+      setError(err.message)
     }
   }
 
