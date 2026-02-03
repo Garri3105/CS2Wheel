@@ -1,9 +1,9 @@
 import { signJwt } from "./_jwt"
 
-function json(data, status = 200) {
+function json(data, status = 200, extraHeaders = {}) {
   return new Response(JSON.stringify(data), {
     status,
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", ...extraHeaders },
   })
 }
 
@@ -38,30 +38,44 @@ async function hashPassword(password, saltHex) {
 }
 
 export async function onRequestPost({ request, env }) {
-  const body = await request.json().catch(() => null)
-  const username = body?.username?.trim()
-  const password = body?.password
+  try {
+    const body = await request.json().catch(() => null)
+    const username = body?.username?.trim()
+    const password = body?.password
 
-  if (!username || !password) {
-    return json({ ok: false, error: "Missing username/password" }, 400)
+    if (!username || !password) {
+      return json({ ok: false, error: "Missing username/password" }, 400)
+    }
+
+    const row = await env.DB.prepare(
+      "SELECT id, username, password_hash, salt FROM users WHERE username = ?"
+    ).bind(username).first()
+
+    if (!row) return json({ ok: false, error: "Invalid credentials" }, 401)
+
+    const check = await hashPassword(password, row.salt)
+    if (check !== row.password_hash) {
+      return json({ ok: false, error: "Invalid credentials" }, 401)
+    }
+
+    if (!env.JWT_SECRET) {
+      return json({ ok: false, error: "JWT_SECRET missing (needs redeploy)" }, 500)
+    }
+
+    const token = await signJwt(
+      { uid: row.id, username: row.username },
+      env.JWT_SECRET
+    )
+
+    return json(
+      { ok: true, user: { id: row.id, username: row.username } },
+      200,
+      {
+        "Set-Cookie": `session=${token}; HttpOnly; Secure; Path=/; SameSite=Lax; Max-Age=604800`,
+      }
+    )
+  } catch (e) {
+    // 🔥 OVO će ti pokazati pravi uzrok umesto HTML error stranice
+    return json({ ok: false, error: String(e?.message || e) }, 500)
   }
-
-  const row = await env.DB.prepare(
-    "SELECT id, username, password_hash, salt FROM users WHERE username = ?"
-  ).bind(username).first()
-
-  if (!row) return json({ ok: false, error: "Invalid credentials" }, 401)
-
-  const check = await hashPassword(password, row.salt)
-  if (check !== row.password_hash) {
-    return json({ ok: false, error: "Invalid credentials" }, 401)
-  }
-
-  return new Response(JSON.stringify({ ok: true, user: { id: row.id, username: row.username } }), {
-    status: 200,
-    headers: {
-      "Content-Type": "application/json",
-      "Set-Cookie": `session=${token}; HttpOnly; Secure; Path=/; SameSite=Lax; Max-Age=604800`,
-    },
-  })
 }
