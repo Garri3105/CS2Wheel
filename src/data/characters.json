@@ -1,0 +1,74 @@
+[
+    {
+        "id": 1,
+        "username": "Garri",
+        "color" : "#ff4d4d",
+        "image": "images/garri.png"
+    },
+    {
+        "id": 2,
+        "username": "Comfri",
+        "color": "#4caf50",
+        "image": "images/comfri.png"
+    },
+    {
+        "id": 3,
+        "username": "Madjija",
+        "color": "#ff80ab",
+        "image" : "images/mirkec.png"
+    },
+    {
+        "id": 4,
+        "username": "Viktor",
+        "color": "#ff9800",
+        "image": "images/viktor.png"
+    },
+    {
+        "id": 5,
+        "username": "Kawa",
+        "color": "#ff9801",
+        "image": "images/kawa.png"
+    },
+    {
+        "id": 6,
+        "username": "Kendjur",
+        "color": "#ff9802",
+        "image": "images/kendjur.png"
+    },
+    {
+        "id": 7,
+        "username": "Aca",
+        "color": "#ff9803",
+        "image": "images/aca.png"
+    },
+    {
+        "id": 8,
+        "username": "Matija",
+        "color": "#ff9804",
+        "image": "images/mirkec.png"
+    },
+    {
+        "id": 9,
+        "username": "Latin",
+        "color": "#ff9805",
+        "image": "images/latin.png"
+    },
+    {
+        "id": 10,
+        "username": "Perovic",
+        "color": "#ff9805",
+        "image": "images/perovic.png"
+    },
+    {
+        "id": 11,
+        "username": "Bojan",
+        "color": "#ff9805",
+        "image": "images/bojan.png"
+    },
+    {
+        "id": 12,
+        "username": "Arkan",
+        "color": "#ff9805",
+        "image": "images/arkan.png"
+    }
+]
