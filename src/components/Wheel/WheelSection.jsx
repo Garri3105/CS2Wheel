@@ -145,22 +145,23 @@ function WheelSection({ showStats, onCloseStats }) {
     <div className="wheel-container">
 
     {showResetConfirm && (
-    <div className="confirm-overlay" onClick={() => setShowResetConfirm(false)}>
-        <div className="confirm-modal" onClick={(e) => e.stopPropagation()}>
-        <h2>Reset winner history?</h2>
-        <p>This will clear all 5 slots.</p>
+        <div className="reset-overlay" onClick={() => setShowResetConfirm(false)}>
+            <div className="reset-panel" onClick={(e) => e.stopPropagation()}>
+            <h2>Reset winner history?</h2>
+            <p>Ovo briše svih 5 slotova u winner history.</p>
 
-        <div className="confirm-actions">
-            <button className="confirm-danger" onClick={resetWinnerHistory}>
-            Yes, reset
-            </button>
-            <button className="confirm-cancel" onClick={() => setShowResetConfirm(false)}>
-            Cancel
-            </button>
+            <div className="reset-actions">
+                <button className="reset-ok" onClick={resetWinnerHistory}>
+                OK
+                </button>
+                <button className="reset-cancel" onClick={() => setShowResetConfirm(false)}>
+                Cancel
+                </button>
+            </div>
+            </div>
         </div>
-        </div>
-    </div>
     )}
+
 
 
     {showStats && (
