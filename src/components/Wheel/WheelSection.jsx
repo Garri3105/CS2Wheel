@@ -4,7 +4,7 @@ import { useRef, useState } from "react"
 import StatsPanel from "../StatsPanel/StatsPanel"
 
 
-function WheelSection({ showStats }) {
+function WheelSection({ showStats, onCloseStats }) {
     const [items, setItems] = useState([])
     const [rotation, setRotation] = useState(0)
     const [spinning, setSpinning] = useState(false)
@@ -138,11 +138,14 @@ function WheelSection({ showStats }) {
     return (
     <div className="wheel-container">
 
-    <div className="stats-overlay" onClick={() => setShowStats(false)}>
-        <div onClick={e => e.stopPropagation()}>
+    {showStats && (
+        <div className="stats-overlay" onClick={onCloseStats}>
+            <div onClick={(e) => e.stopPropagation()}>
             <StatsPanel ref={statsRef} />
+            </div>
         </div>
-    </div>
+    )}
+
 
 
     {showWinner && winner && (

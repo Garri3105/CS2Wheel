@@ -8,7 +8,10 @@ export default function AppPage() {
   return (
     <>
       <Header onToggleStats={() => setShowStats(s => !s)} />
-      <WheelSection showStats={showStats} />
+      <WheelSection
+        showStats={showStats}
+        onCloseStats={() => setShowStats(false)}
+      />
     </>
   )
 }
