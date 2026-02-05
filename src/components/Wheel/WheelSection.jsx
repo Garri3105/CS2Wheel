@@ -138,16 +138,11 @@ function WheelSection({ showStats }) {
     return (
     <div className="wheel-container">
 
-    {showStats && (
-    <div style={{
-        position: "fixed",
-        top: "70px",
-        right: "20px",
-        zIndex: 2000
-    }}>
-        <StatsPanel ref={statsRef} />
+    <div className="stats-overlay" onClick={() => setShowStats(false)}>
+        <div onClick={e => e.stopPropagation()}>
+            <StatsPanel ref={statsRef} />
+        </div>
     </div>
-    )}
 
 
     {showWinner && winner && (
