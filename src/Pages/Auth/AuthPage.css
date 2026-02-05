@@ -23,9 +23,6 @@
   background: #222;
   color: white;
 }
-.auth-card input:focus-visible {
-  outline: #7613ff;
-}
 
 .auth-card button {
   padding: 12px;

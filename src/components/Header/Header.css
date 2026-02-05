@@ -40,15 +40,15 @@
 
 .header-center h2 {
   margin: 0;
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: 800;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
 
-  background: #7c3aed;
+  background: #fff;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 
-  text-shadow: 0 0 20px rgba(168, 85, 247, 0.2);
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
 }
 
 /* DESNO */
