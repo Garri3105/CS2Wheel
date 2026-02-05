@@ -1,6 +1,9 @@
 import { useState } from "react"
 import "./WheelSection.css"
 import characters from "/src/data/characters.json"
+import { useRef, useState } from "react"
+import StatsPanel from "../StatsPanel/StatsPanel"
+
 
 function WheelSection() {
     const [items, setItems] = useState([])
@@ -22,6 +25,9 @@ function WheelSection() {
             prev.filter((_, index) => index !== indexToRemove)
         )
     }
+    const statsRef = useRef(null)
+    const [showStats, setShowStats] = useState(false)
+
 
 
     const toggleInWheel = (character) => {
@@ -40,12 +46,31 @@ function WheelSection() {
         })
     }
 
-    const removeWinner = () => {
+    const removeWinner = async () => {
+        try {
+            await fetch("/api/stats/win", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify({
+                user_id: winner.id,
+                username: winner.username,
+                image: winner.image,
+            }),
+            })
+
+            statsRef.current?.refresh()
+        } catch (e) {
+            console.error("Stats save failed", e)
+        }
+
         addWinnerToHistory(winner)
-        setItems(items.filter(item => item.id !== winner.id))
+        setItems(items.filter(i => i.id !== winner.id))
         setWinner(null)
         setShowWinner(false)
     }
+
+
 
     const addWinnerToHistory = (winner) => {
         setWinnerHistory(prev => {
@@ -175,6 +200,7 @@ function WheelSection() {
 
         {/* SREDINA – TOČAK */}
         <div className="wheel-center">
+            {showStats && <StatsPanel ref={statsRef} />}
         <svg
             width="500"
             height="500"
@@ -265,7 +291,7 @@ function WheelSection() {
             const entry = winnerHistory[index]
 
             return (
-            <div key={index} className="winner-slot" onClick={() => entry && removeFromWinnerHistory(index)}
+            <div key={index} className="winner-slot" onClick={() => entry /*{&& removeFromWinnerHistory(index)}*/}
                 style={{cursor: entry? "pointer" : "default"}}>
                 {entry?.image && (
                 <img

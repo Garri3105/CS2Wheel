@@ -18,6 +18,9 @@ export default function Header() {
 
       {/* DESNO */}
       <div className="header-right">
+        <button className="header-btn" onClick={onToggleStats}>
+          Stats
+        </button>
         {user && (
           <button className="logout-btn" onClick={logout}>
             Logout
