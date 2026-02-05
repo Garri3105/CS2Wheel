@@ -140,6 +140,18 @@ function WheelSection() {
     return (
     <div className="wheel-container">
 
+    {showStats && (
+    <div style={{
+        position: "fixed",
+        top: "70px",
+        right: "20px",
+        zIndex: 2000
+    }}>
+        <StatsPanel ref={statsRef} />
+    </div>
+    )}
+
+
     {showWinner && winner && (
         <div className="winner-overlay">
         <div className="winner-modal">
@@ -199,7 +211,6 @@ function WheelSection() {
 
         {/* SREDINA – TOČAK */}
         <div className="wheel-center">
-            {showStats && <StatsPanel ref={statsRef} />}
         <svg
             width="500"
             height="500"

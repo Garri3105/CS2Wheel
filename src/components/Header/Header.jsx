@@ -18,7 +18,10 @@ export default function Header({ onToggleStats }) {
 
       {/* DESNO */}
       <div className="header-right">
-        <button className="header-btn" onClick={onToggleStats}>
+        <button className="stats-btn" onClick={() => {
+            console.log("Stats clicked")
+            onToggleStats()
+          }}>
           Stats
         </button>
         {user && (
