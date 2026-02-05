@@ -1,4 +1,3 @@
-import { useState } from "react"
 import "./WheelSection.css"
 import characters from "/src/data/characters.json"
 import { useRef, useState } from "react"
