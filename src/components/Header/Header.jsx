@@ -1,5 +1,4 @@
 import { useAuth } from "../../auth/AuthContext"
-import "./StatsPanel"
 import "./Header.css"
 
 export default function Header({ onToggleStats }) {
