@@ -23,6 +23,9 @@
   background: #222;
   color: white;
 }
+.auth-card input {
+  outline: #7613ff;
+}
 
 .auth-card button {
   padding: 12px;
@@ -38,6 +41,11 @@
   color: #aaa;
   text-align: center;
   cursor: pointer;
+  transition: transform 0.25s ease;
+}
+
+.auth-card p:hover{
+  transform: scale(1.1);
 }
 
 .auth-error {
