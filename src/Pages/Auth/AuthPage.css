@@ -23,7 +23,7 @@
   background: #222;
   color: white;
 }
-.auth-card input {
+.auth-card input:active {
   outline: #7613ff;
 }
 
