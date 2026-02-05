@@ -58,16 +58,14 @@ const StatsPanel = forwardRef((props, ref) => {
 
   return (
     <div className="stats-panel">
-      {/* ✅ NOVO: Total spins */}
-      <div className="stats-top">
-        <div className="stats-chip">
-          Total spins: <span>{totalSpins}</span>
-        </div>
-      </div>
-
       <div className="stats-grid">
         <div>
-          <h3>Leaderboard</h3>
+            <div className="stats-header-row">
+            <h3>Leaderboard</h3>
+            <div className="stats-chip">
+                Total spins: <span>{totalSpins}</span>
+            </div>
+        </div>
           <div className="stats-list">
             {leaderboard.map((row, i) => {
               const pctNum = totalSpins > 0 ? (row.wins / totalSpins) * 100 : 0

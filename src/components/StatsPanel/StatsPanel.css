@@ -174,41 +174,17 @@
   }
 }
 
-.stats-top {
-  margin-bottom: 14px;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.stats-chip {
-  padding: 8px 12px;
-  border-radius: 999px;
-  background: rgba(124, 58, 237, 0.14);
-  border: 1px solid rgba(124, 58, 237, 0.35);
-  color: rgba(255, 255, 255, 0.9);
-  font-weight: 800;
-}
-
-.stats-chip span {
-  color: #fff;
-  margin-left: 6px;
-}
-
-.right-metrics {
-  justify-self: end;
+.stats-header-row {
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
 
-.pct {
-  font-weight: 900;
-  color: rgba(255, 255, 255, 0.9);
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  padding: 4px 10px;
-  border-radius: 999px;
+.stats-header-row h3 {
+  margin: 0;
 }
+
 
 /* invisible scroll bar */
 .stats-panel {
