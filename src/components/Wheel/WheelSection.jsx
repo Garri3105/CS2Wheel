@@ -4,7 +4,7 @@ import { useRef, useState } from "react"
 import StatsPanel from "../StatsPanel/StatsPanel"
 
 
-function WheelSection() {
+function WheelSection({ showStats }) {
     const [items, setItems] = useState([])
     const [rotation, setRotation] = useState(0)
     const [spinning, setSpinning] = useState(false)
@@ -25,8 +25,6 @@ function WheelSection() {
         )
     }
     const statsRef = useRef(null)
-    const [showStats, setShowStats] = useState(false)
-
 
 
     const toggleInWheel = (character) => {
