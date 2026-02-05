@@ -6,11 +6,11 @@ const EXTRA_SPIN_MS = 1000
 const StatsPanel = forwardRef((props, ref) => {
   const [leaderboard, setLeaderboard] = useState([])
   const [recent, setRecent] = useState([])
+  const [totalSpins, setTotalSpins] = useState(0) // ✅ NOVO
   const [loading, setLoading] = useState(true)
 
   const loadStats = async () => {
     setLoading(true)
-
     const started = Date.now()
 
     try {
@@ -19,13 +19,15 @@ const StatsPanel = forwardRef((props, ref) => {
         fetch("/api/stats/recent").then(r => r.json()),
       ])
 
-      if (lbRes.ok) setLeaderboard(lbRes.leaderboard)
+      if (lbRes.ok) {
+        setLeaderboard(lbRes.leaderboard)
+        setTotalSpins(lbRes.totalSpins || 0) // ✅ NOVO
+      }
+
       if (rcRes.ok) setRecent(rcRes.recent)
     } catch (e) {
-      // dodati error UI kasnije
       console.error("Failed to load stats", e)
     } finally {
-      // spinner vrti bar jos 1s nakon sto se sve ucita
       const elapsed = Date.now() - started
       const wait = Math.max(EXTRA_SPIN_MS - elapsed, 0)
 
@@ -56,18 +58,37 @@ const StatsPanel = forwardRef((props, ref) => {
 
   return (
     <div className="stats-panel">
+      {/* ✅ NOVO: Total spins */}
+      <div className="stats-top">
+        <div className="stats-chip">
+          Total spins: <span>{totalSpins}</span>
+        </div>
+      </div>
+
       <div className="stats-grid">
         <div>
           <h3>Leaderboard</h3>
           <div className="stats-list">
-            {leaderboard.map((row, i) => (
-              <div key={row.user_id} className="stats-row">
-                <span className="rank">#{i + 1}</span>
-                {row.image && <img className="avatar" src={row.image} alt={row.username} />}
-                <span className="name">{row.username}</span>
-                <span className="wins">{row.wins}</span>
-              </div>
-            ))}
+            {leaderboard.map((row, i) => {
+              const pctNum = totalSpins > 0 ? (row.wins / totalSpins) * 100 : 0
+              const pct = pctNum.toFixed(2).replace(".", ",") + "%"
+
+              return (
+                <div key={row.user_id} className="stats-row">
+                  <span className="rank">#{i + 1}</span>
+                  {row.image && (
+                    <img className="avatar" src={row.image} alt={row.username} />
+                  )}
+                  <span className="name">{row.username}</span>
+
+                  {/* ✅ NOVO: wins + procenat */}
+                  <div className="right-metrics">
+                    <span className="wins">{row.wins}</span>
+                    <span className="pct">{pct}</span>
+                  </div>
+                </div>
+              )
+            })}
           </div>
         </div>
 
@@ -76,7 +97,11 @@ const StatsPanel = forwardRef((props, ref) => {
           <div className="recent-grid">
             {recent.map((r, i) => (
               <div key={i} className="recent-item" title={r.username}>
-                {r.image ? <img src={r.image} alt={r.username} /> : <span>{r.username}</span>}
+                {r.image ? (
+                  <img src={r.image} alt={r.username} />
+                ) : (
+                  <span>{r.username}</span>
+                )}
               </div>
             ))}
           </div>
