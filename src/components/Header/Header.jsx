@@ -1,7 +1,8 @@
 import { useAuth } from "../../auth/AuthContext"
+import "./StatsPanel"
 import "./Header.css"
 
-export default function Header() {
+export default function Header({ onToggleStats }) {
   const { user, logout } = useAuth()
 
   return (
