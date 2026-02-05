@@ -26,6 +26,12 @@ function WheelSection({ showStats, onCloseStats }) {
     }
     const statsRef = useRef(null)
 
+    const [showResetConfirm, setShowResetConfirm] = useState(false)
+
+    const resetWinnerHistory = () => {
+    setWinnerHistory([])
+    setShowResetConfirm(false)
+    }
 
     const toggleInWheel = (character) => {
         if(isInWinnerHistory(character.id)) return
@@ -138,6 +144,25 @@ function WheelSection({ showStats, onCloseStats }) {
     return (
     <div className="wheel-container">
 
+    {showResetConfirm && (
+    <div className="confirm-overlay" onClick={() => setShowResetConfirm(false)}>
+        <div className="confirm-modal" onClick={(e) => e.stopPropagation()}>
+        <h2>Reset winner history?</h2>
+        <p>This will clear all 5 slots.</p>
+
+        <div className="confirm-actions">
+            <button className="confirm-danger" onClick={resetWinnerHistory}>
+            Yes, reset
+            </button>
+            <button className="confirm-cancel" onClick={() => setShowResetConfirm(false)}>
+            Cancel
+            </button>
+        </div>
+        </div>
+    </div>
+    )}
+
+
     {showStats && (
         <div className="stats-overlay" onClick={onCloseStats}>
             <div onClick={(e) => e.stopPropagation()}>
@@ -145,8 +170,6 @@ function WheelSection({ showStats, onCloseStats }) {
             </div>
         </div>
     )}
-
-
 
     {showWinner && winner && (
         <div className="winner-overlay">
@@ -273,22 +296,47 @@ function WheelSection({ showStats, onCloseStats }) {
             />
         </svg>
 
-        <button
-            onClick={handleSpin}
-            disabled={spinning}
-            style={{
-                marginTop: "20px",
+        <div style={{ display: "flex", gap: "12px", justifyContent: "center", marginTop: "20px" }}>
+            {/* SPIN */}
+            <button
+                className="spin-btn"
+                onClick={handleSpin}
+                disabled={spinning}
+                style={{
                 fontWeight: "bold",
                 fontSize: "1.5em",
                 opacity: spinning || slotsLeft <= 0 ? 0.5 : 1,
                 cursor:
-                spinning || slotsLeft <= 0 ? "not-allowed" : "pointer",
-            }}
+                    spinning || slotsLeft <= 0 ? "not-allowed" : "pointer",
+                }}
             >
-            {slotsLeft <= 0
+                {slotsLeft <= 0
                 ? "No spins left"
                 : `Spin (${slotsLeft})`}
-        </button>
+            </button>
+
+            {/* RESET */}
+            <button
+                className="reset-btn"
+                onClick={() => setShowResetConfirm(true)}
+                disabled={spinning || winnerHistory.length === 0}
+                style={{
+                fontWeight: "bold",
+                fontSize: "1.2em",
+                padding: "0 16px",
+                borderRadius: "10px",
+                background: "rgba(255,255,255,0.08)",
+                border: "1px solid rgba(255,255,255,0.15)",
+                color: "white",
+                opacity: spinning || winnerHistory.length === 0 ? 0.4 : 1,
+                cursor:
+                    spinning || winnerHistory.length === 0 ? "not-allowed" : "pointer",
+                }}
+            >
+                Reset
+            </button>
+        </div>
+
         </div>
 
         {/* DESNO – WINNER HISTORY */}
