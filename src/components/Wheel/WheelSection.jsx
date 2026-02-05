@@ -148,7 +148,7 @@ function WheelSection({ showStats, onCloseStats }) {
         <div className="reset-overlay" onClick={() => setShowResetConfirm(false)}>
             <div className="reset-panel" onClick={(e) => e.stopPropagation()}>
             <h2>Reset winner history?</h2>
-            <p>Ovo briše svih 5 slotova u winner history.</p>
+            <p>This removes current winner history.</p>
 
             <div className="reset-actions">
                 <button className="reset-ok" onClick={resetWinnerHistory}>
